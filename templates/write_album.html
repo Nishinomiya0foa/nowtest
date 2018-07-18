@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-上传照片{% endblock %}
+{% block banner %}{% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.editable-select.css' %}" />
+{% endblock %}
+{% block content %}
+    <div class="loginform">
+          <h2>上传照片</h2>
+                <form action="{% url 'album:write_album' %}" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <div class="form-group marb20">
+                        <h3>
+                            <span class="fl upload-inp-box" style="">
+                                <span class="button btn-green btn-w100" id="jsAvatarBtn">照&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片</span>
+                                <input type="file" name="image" id="avatarUp" class="js-img-up"/>
+                            </span>
+                        </h3>
+                        <h3>
+                            <label>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;字</label>
+                            <input name="name" id="account_l" type="text" placeholder="名字" />
+                            <label id="" name="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是&nbsp;否&nbsp;展&nbsp;示</label>
+                                <select name="is_show">
+                                    <option name="" value="1">展示</option>
+                                    <option type="submit" value="0">不展示</option>
+
+                                </select>
+                        </h3>
+                    </div>
+                    <div class="form-group marb8 {% if login_form.errors.password %}errorput{% endif %}">
+                        <h3>
+                            <label>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签</label>
+{#                            <input name="tag" id="password_l" type="text" placeholder="" />#}
+                                 <select name="tag" id="editable-select">
+                                    <option name="" value="生活照">生活照</option>
+                                    <option name="" value="网图">网图</option>
+                                    <option name="" value="壁纸">壁纸</option>
+                                </select>
+                        </h3>
+                    </div>
+                    <div class="">
+                        <h3>
+                            <label>描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述</label>
+{#                            <input name="content" type="text" placeholder="" />#}
+                            <textarea name="desc" class="textarea-field admintextareawidget form-control" id="id_content" rows="10" cols="60"></textarea>
+                        </h3>
+                    </div>
+
+                    <button id="jsWriteBtn" type="submit">提交</button>
+{#                    <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />#}
+                    <p class="sub-heading">Brian的个性签名Lorem ipsum dolor sit amet consectetur
+                 adipisicing elit. Praesentium magni nam  hic .</p>
+                    <p class="sub-heading">Brian的个性签名 你只有登录之后才能使用全部功能！</p>
+                {%  csrf_token %}
+          </form>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+<script type="text/javascript">
+$(function(){
+    $('#editable-select').editableSelect({
+        effects: 'slide'
+    });
+});
+</script>
+    <script src="{% static 'js/jquery.editable-select.js' %}" type="text/javascript"></script>
+{% endblock %}
+{% block footer %}{% endblock %}

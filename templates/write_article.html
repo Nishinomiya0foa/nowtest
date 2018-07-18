@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-写文章{% endblock %}
+{% block banner %}{% endblock %}
+{% block content %}
+    <div class="loginform">
+          <h2>写文章</h2>
+                <form action="{% url 'article:write_article' %}" method="post" autocomplete="off">
+                    <div class="form-group marb20">
+                        <h3>
+                            <label>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</label>
+                            <input name="title" id="account_l" type="text" placeholder="" />
+                            <label id="" name="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是&nbsp;否&nbsp;展&nbsp;示</label>
+                                <select name="is_show">
+                                    <option name="" value="1">展示</option>
+                                    <option name="" value="0">不展示</option>
+
+                                </select>
+                        </h3>
+                    </div>
+                    <div class="form-group marb8">
+                        <h3>
+                            <label>副&nbsp;标&nbsp;题</label>
+                            <input name="sub_title" id="password_l" type="text" placeholder="" />
+                        </h3>
+                    </div>
+                    <div class="form-group marb8">
+                        <h3>
+                            <label>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类</label>
+                                <select name="category">
+                                    <option value="sb">随笔</option>
+                                    <option value="rj">日记</option>
+                                    <option value="yj">游记</option>
+                                </select>
+                        </h3>
+                    </div>
+                    <div class="">
+                        <h3>
+                            <label>正&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文</label>
+{#                            <input name="content" type="text" placeholder="" />#}
+                            <textarea name="content" class="" id="id_content" rows="10" cols="100">
+                                文章的内容
+                            </textarea>
+                        </h3>
+                    </div>
+
+
+{#                    <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />#}
+                    <input class="btn btn-green" id="jsWriteBtn" onclick="javascript:history.back(-1);" type="submit" value="提交 > " />
+                    <p class="sub-heading">Brian的个性签名Lorem ipsum dolor sit amet consectetur
+                 adipisicing elit. Praesentium magni nam  hic .</p>
+                    <p class="sub-heading">Brian的个性签名 你只有登录之后才能使用全部功能！</p>
+                {%  csrf_token %}
+          </form>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

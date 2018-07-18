@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-所有文章{% endblock %}
+{% block banner %}{% endblock %}
+{% block content %}
+    <div>
+        <h2>所有文章</h2>
+    {% for article in all_articles.object_list %}
+        <table class="all_articles" cellpadding="6px" width="1400" style="table-layout:fixed;">
+            <tr>
+                <td width="300px"><a href="{% url 'article:article_read' article.id %}">{{ article.title }}</a></td>
+                <td width="100px">{{ article.get_category_display }}</td>
+                <td width="400px">{{ article.sub_title }}</td>
+                <td width="500px">{{ article.add_time }}</td>
+                <td width="100px"><button id="jsShowBtn">{% if article.is_show %}展示{% else %}不展示{% endif %}</button></td>
+            </tr>
+        </table>
+
+    {% endfor %}
+    </div>
+    <div class="pageturn">
+        <ul class="pagelist">
+                {% if all_articles.has_previous %}
+                    <li class="long"><a href="?{{ all_articles.previous_page_number.querystring }}">上一页</a></li>
+                {% endif %}
+            
+                {% for page in all_articles.pages %}
+                    {% if page %}
+                        {% ifequal page all_articles.number %}
+                            <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                        {% else %}
+                            <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                        {% endifequal %}
+                    {% else %}
+                        <li class="none"><a href="">...</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if all_articles.has_next %}
+                    <li class="long"><a href="?{{ all_articles.next_page_number.querystring }}">下一页</a></li>
+
+                {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+<script type="text/javascript">
+
+function add_show(current_elem, is_show){
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url:"{% url 'add_show' %}",
+        data:{'is_show':is_show},
+        async: true,
+        beforeSend:function(xhr, settings){
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+        },
+        success: function(data) {
+            if(data.status == 'success'){
+                current_elem.text(data.msg)
+
+            }
+        },
+    });
+}
+
+$('#jsShowBtn').on('click', function() {
+    add_show($(this), {{ article.is_show }});
+});
+
+</script>
+{% endblock %}

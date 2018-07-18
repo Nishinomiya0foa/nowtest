@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-个人中心{% endblock %}
+{% block banner %}{% endblock %}
+{% block custom_css %}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />#}
+{% endblock %}
+{% block content %}
+    <div class="loginform">
+
+              <h2>个人中心</h2>
+    <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off" method="post" action="{% url 'user_center' %}">
+                        <label class="changearea" for="avatarUp">
+                            <span id="avatardiv" class="pic">
+                                <img width="100" height="100" class="js-img-show" id="avatarShow" src="{{ MEDIA_URL }}{{ request.user.photo }}"/>
+                            </span>
+                            <span class="fl upload-inp-box" style="margin-left:70px;">
+                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
+                                <input type="file" name="photo" id="avatarUp" class="js-img-up"/>
+                            </span>
+                        </label>
+                        <div style="border-top:2px solid #eaeaea;margin-top:0px;">
+{#                            <a class="button btn-green" id="jsUserResetPwd" style="margin:120px auto;width:100px;">修改密码</a>#}
+                            <button id="jsUserResetPwd" style="margin:50px auto;width:100px;">修改密码</button>
+
+                        </div>
+                        <div class="usercenter_name" style="margin: 0px auto;">
+                            <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
+                            <input type="text" name="nick_name" id="nick_name" value="{{ request.user.nick_name }}" maxlength="10">
+                        </div>
+                        <div class="usercenter_name" style="margin: 10px auto;">
+                            <span>个性签名：</span>
+                            <input type="text" name="desc" id="address" placeholder="请输入你的个性签名" value="{{ request.user.desc }}" maxlength="100">
+                        </div>
+                        <button id="jsWriteBtn" type="submit">提交</button>
+
+
+
+                        {% csrf_token %}
+                    </form>
+    </div>
+{% endblock %}
+
+
+
+

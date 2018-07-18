@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-登录{% endblock %}
+{% block banner %}
+{% endblock %}
+{% block custom_css %}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">#}
+{#	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">#}
+{% endblock %}
+{% block content %}
+    <div class="loginform" id="">
+                <h2>帐号登录</h2>
+                <form action="{% url 'login' %}" id="login_form" method="post" autocomplete="off">
+                    <div class="form-group marb20 {% if login_form.errors.username %}errorput{% endif %}">
+                        <h3>
+                            <label>用&nbsp;户&nbsp;名</label>
+                            <input name="username" id="account_l" type="text" placeholder="手机号/邮箱" />
+                        </h3>
+                    </div>
+                    <div class="form-group marb8 {% if login_form.errors.password %}errorput{% endif %}">
+                        <h3>
+                            <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                            <input name="password" id="password_l" type="password" placeholder="请输入您的密码" />
+                        </h3>
+                    </div>
+                    <div class="form-group marb8 captcha1">
+                        <h3>
+                            <label>验&nbsp;证&nbsp;码</label>
+                            {{ login_form.captcha }}
+{#                            <a id="loginform" onclick="refresh_captcha(this)">点击更改验证码</a>#}
+                        </h3>
+                    </div>
+
+
+                    <div class="error btns login-form-tips" id="jsLoginTips">{% for key,error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+
+                    <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />
+                    <p class="sub-heading">Brian的个性签名Lorem ipsum dolor sit amet consectetur
+                 adipisicing elit. Praesentium magni nam  hic .</p>
+                    <p class="sub-heading">Brian的个性签名 你只有登录之后才能使用全部功能！</p>
+                {%  csrf_token %}
+                </form>
+            </div>
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript">
+    {#    //刷新验证码#}
+        function refresh_captcha(event){
+            $.get("/captcha/refresh/?"+Math.random(), function(result){
+                $('#'+event.data.form_id+' .captcha').attr("src",result.image_url);
+                $('#id_captcha_0').attr("value",result.key);
+            });
+            return false;
+        }
+    </script>
+
+    <script src="{% static 'js/jquery2.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/login.js' %}"  type="text/javascript"></script>
+    <script src="{% static 'js/validateDialog.js' %}"  type="text/javascript"></script>
+
+{% endblock %}
+{#{% block footer %}#}
+{#{% endblock %}#}
+
+
+
+
+
+

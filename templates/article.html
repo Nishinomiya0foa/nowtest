@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}我的博客-阅读文章{% endblock %}
+{% block banner %}
+    <div id="article_banner">
+            <div class="inner">
+                <h4>{{ article.title }}</h4>
+                <p class="sub-heading">
+                    {{ article.sub_title }}
+                </p>
+            </div>
+        </div>
+{% endblock %}
+{% block content %}
+<body>
+<div class = "article_content"  >
+    <div class="content_wrapper">
+        <div class="article_info">编辑于：{{ article.add_time }}|作者：{{ article.writer.nick_name }}</div>
+            <article>
+                <div>
+                    {{ article.content }}
+                </div>
+            </article>
+    </div>
+</div>
+</body>
+{% endblock %}
