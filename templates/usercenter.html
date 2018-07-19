@@ -19,18 +19,22 @@
                                 <input type="file" name="photo" id="avatarUp" class="js-img-up"/>
                             </span>
                         </label>
+                        <button id="jsPhotoBtn" type="submit">提交</button>
+        {% csrf_token %}
+    </form>
                         <div style="border-top:2px solid #eaeaea;margin-top:0px;">
 {#                            <a class="button btn-green" id="jsUserResetPwd" style="margin:120px auto;width:100px;">修改密码</a>#}
                             <button id="jsUserResetPwd" style="margin:50px auto;width:100px;">修改密码</button>
 
                         </div>
+        <form method="post" action="{% url 'user_center' %}">
                         <div class="usercenter_name" style="margin: 0px auto;">
                             <span>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</span>
                             <input type="text" name="nick_name" id="nick_name" value="{{ request.user.nick_name }}" maxlength="10">
                         </div>
                         <div class="usercenter_name" style="margin: 10px auto;">
                             <span>个性签名：</span>
-                            <input type="text" name="desc" id="address" placeholder="请输入你的个性签名" value="{{ request.user.desc }}" maxlength="100">
+                            <input type="text" name="desc" id="address" placeholder="至多输入30个汉字" value="{{ request.user.desc }}" maxlength="30">
                         </div>
                         <button id="jsWriteBtn" type="submit">提交</button>
 

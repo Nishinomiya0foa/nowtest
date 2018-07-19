@@ -5,7 +5,7 @@
 {% block content %}
     <div class="loginform">
           <h2>写文章</h2>
-                <form action="{% url 'article:write_article' %}" method="post" autocomplete="off">
+                <form method="post" autocomplete="off">
                     <div class="form-group marb20">
                         <h3>
                             <label>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题</label>
@@ -46,13 +46,50 @@
 
 
 {#                    <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />#}
-                    <input class="btn btn-green" id="jsWriteBtn" onclick="javascript:history.back(-1);" type="submit" value="提交 > " />
+                    <input class="btn btn-green" id="jsWriteBtn" type="submit" value="提交 > " />
                     <p class="sub-heading">Brian的个性签名Lorem ipsum dolor sit amet consectetur
                  adipisicing elit. Praesentium magni nam  hic .</p>
                     <p class="sub-heading">Brian的个性签名 你只有登录之后才能使用全部功能！</p>
                 {%  csrf_token %}
           </form>
     </div>
+{% endblock %}
+
+{% block custom_js %}
+<script type="text/javascript">
+    //添加文章
+window.onload = function(){
+    $(document).ready(function() {
+        $('#jsWriteBtn').on('click', function () {
+            var content = $("#account_l").val()
+            if (content == "") {
+                alert("标题不能为空!")
+                window.location.reload();//刷新当前页面.
+                {#return#}
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'article:write_article' %}",
+                data: {},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status == 'success') {
+                        window.location.href='index'//刷新当前页面.
+                    }
+                    else if (data.status == 'fail') {
+                        alert("上传失败！")
+                        window.location.reload();//刷新当前页面.
+                    }
+                },
+            });
+        });
+    });
+    }
+</script>
 {% endblock %}
 
 {% block footer %}{% endblock %}

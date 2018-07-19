@@ -196,7 +196,7 @@ p{
 .gray-section .img-section{
     /*width: 45%;*/
     width:45%;
-    height:100%;
+    height:400px;
     min-height: 280px;
     text-align: center;
     display:table-cell;

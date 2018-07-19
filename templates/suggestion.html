@@ -5,11 +5,11 @@
 {% block content %}
     <div class="loginform">
           <h2>用户留言</h2>
-                <form action="{% url 'suggestion' %}" method="post" autocomplete="off">
+                <form method="post" autocomplete="off">
                     <div class="form-group marb20">
                         <h3>
                             <label>昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</label>
-                            <input name="name" id="account_l" type="text" placeholder="用户昵称"/>
+                            <input name="name" id="account_l" type="text" placeholder="用户昵称" value="{% if request.user.is_authenticated %}{{ request.user.nick_name }}{% else %}匿名{% endif %}"/>
                         </h3>
                     </div>
                     <div class="">
@@ -83,18 +83,22 @@ window.onload = function(){
                 cache: false,
                 type: "POST",
                 url: "{% url 'suggestion' %}",
-                data: {'content': content},
+                data: {},
                 async: true,
                 beforeSend: function (xhr, settings) {
                     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
                 },
                 success: function (data) {
                     if (data.status == 'fail') {
-                            alert(data.msg)
+                            {#alert(data.msg)#}
                             {#window.location.href={% url 'suggestion' %};#}
+                        window.location.reload();//刷新当前页面.
                     }
                     else if (data.status == 'success') {
                         {#window.location.href={% url 'suggestion' %};#}
+                        window.location.reload();//刷新当前页面.
+                    }
+                    else{
                         window.location.reload();//刷新当前页面.
                     }
                 },

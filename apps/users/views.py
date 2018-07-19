@@ -13,10 +13,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from lxml import etree
 import requests
 import time
+import json
 
 from article.models import Article
 from album.models import Album
-from .forms import LoginForm, UploadPhotoForm
+from .forms import LoginForm, UploadPhotoForm, UserInfoForm
 from .models import UserProfile, Suggestion, UserShow
 # Create your views here.
 
@@ -71,6 +72,7 @@ class LogoutView(View):
 
 
 class LoginView(View):
+    """登录"""
     def get(self, request):
         login_form = LoginForm()
         return render(request, "login.html", {
@@ -119,9 +121,11 @@ class SuggestionView(View):
 
     def post(self, request):
         """添加留言"""
+        name = request.POST.get("name", "")
         contents = request.POST.get("content", "")
         if contents:
             user_contents = Suggestion()
+            user_contents.name = name
             user_contents.content = contents
             user_contents.save()
             return HttpResponse('{"status":"success", "msg":"留言成功！"}', content_type='application/json')
@@ -145,6 +149,13 @@ class UserCenterView(LoginRequiredMixin, View):
             request.user.photo = photo
             request.user.save()
             return HttpResponse("{'status':'success'}", content_type='application/json')
+
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse('{"status": "success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
 
 class AddShowView(View):

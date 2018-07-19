@@ -20,3 +20,10 @@ class UploadPhotoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['photo']
+
+
+class UserInfoForm(forms.ModelForm):
+    #
+    class Meta:
+        model = UserProfile
+        fields = ['nick_name', 'desc']

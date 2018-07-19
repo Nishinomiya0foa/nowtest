@@ -44,7 +44,7 @@ class WriteArticleView(LoginRequiredMixin, View):
         content = request.POST.get("content", "")
         category = request.POST.get("category", "")
         writer = request.user.id
-        if title and content:
+        if title and content and sub_title:
             article = Article()
             article.title = title
             article.category = category

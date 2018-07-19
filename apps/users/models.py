@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     nick_name = models.CharField(max_length=20, verbose_name=u"昵称", default='')
-    photo = models.ImageField(upload_to="image/%Y/%m", default=u"image/default.jpg", max_length=100, verbose_name=u"头像")
+    photo = models.ImageField(upload_to="image/%Y/%m", default="", max_length=100, verbose_name=u"头像")
     desc = models.CharField(max_length=100, verbose_name=u"个性签名", default='')
 
     class Meta:
